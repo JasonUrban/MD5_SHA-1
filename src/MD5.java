@@ -24,13 +24,11 @@ class MD5 {
         int totalLen = numBlocks << 6;
         byte[] paddingBytes = new byte[totalLen - messageLenBytes];
         paddingBytes[0] = (byte) 0x80;
-
         long messageLenBits = (long) messageLenBytes << 3;
         for (int i = 0; i < 8; i++) {
             paddingBytes[paddingBytes.length - 8 + i] = (byte) messageLenBits;
             messageLenBits >>>= 8;
         }
-
         int a = INIT_A;
         int b = INIT_B;
         int c = INIT_C;
@@ -52,17 +50,14 @@ class MD5 {
                     case 0:
                         f = (b & c) | (~b & d);
                         break;
-
                     case 1:
                         f = (b & d) | (c & ~d);
                         bufferIndex = (bufferIndex * 5 + 1) & 0x0F;
                         break;
-
                     case 2:
                         f = b ^ c ^ d;
                         bufferIndex = (bufferIndex * 3 + 5) & 0x0F;
                         break;
-
                     case 3:
                         f = c ^ (b | ~d);
                         bufferIndex = (bufferIndex * 7) & 0x0F;

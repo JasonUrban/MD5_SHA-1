@@ -39,7 +39,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-public class SHA1 {
+class SHA1 {
     private static int rol(int num, int cnt) {
         return (num << cnt) | (num >>> (32 - cnt));
     }

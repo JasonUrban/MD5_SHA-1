@@ -40,10 +40,6 @@
  */
 
 class SHA1 {
-    private static int rol(int num, int cnt) {
-        return (num << cnt) | (num >>> (32 - cnt));
-    }
-
     static String encodeHex(String str) {
         byte[] x = str.getBytes();
         int[] blks = new int[(((x.length + 8) >> 6) + 1) * 16];
@@ -54,11 +50,11 @@ class SHA1 {
         blks[i >> 2] |= 0x80 << (24 - (i % 4) * 8);
         blks[blks.length - 1] = x.length * 8;
         int[] w = new int[80];
-        int a = 1732584193;
-        int b = -271733879;
-        int c = -1732584194;
-        int d = 271733878;
-        int e = -1009589776;
+        int a = 0x67452301;
+        int b = 0xEFCDAB89;
+        int c = 0x98BADCFE;
+        int d = 0x10325476;
+        int e = 0xC3D2E1F0;
         for (i = 0; i < blks.length; i += 16) {
             int olda = a;
             int oldb = b;
@@ -67,16 +63,15 @@ class SHA1 {
             int olde = e;
             for (int j = 0; j < 80; j++) {
                 w[j] = (j < 16) ? blks[i + j] :
-                        (rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1));
-
-                int t = rol(a, 5) + e + w[j] +
-                        ((j < 20) ? 1518500249 + ((b & c) | ((~b) & d))
-                                : (j < 40) ? 1859775393 + (b ^ c ^ d)
-                                : (j < 60) ? -1894007588 + ((b & c) | (b & d) | (c & d))
-                                : -899497514 + (b ^ c ^ d));
+                        (Integer.rotateLeft(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1));
+                int t = Integer.rotateLeft(a, 5) + e + w[j] +
+                        ((j < 20) ? 0x5A827999 + ((b & c) | ((~b) & d))
+                                : (j < 40) ? 0x6ED9EBA1 + (b ^ c ^ d)
+                                : (j < 60) ? 0x8F1BBCDC + ((b & c) | (b & d) | (c & d))
+                                : 0xCA62C1D6 + (b ^ c ^ d));
                 e = d;
                 d = c;
-                c = rol(b, 30);
+                c = Integer.rotateLeft(b, 30);
                 b = a;
                 a = t;
             }

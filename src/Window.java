@@ -11,7 +11,6 @@ class Window extends JFrame {
         setSize(1150, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final MyPanel panel = new MyPanel(new GridLayout(0, 2, 30, 20));
-        //panel.setPreferredSize(new Dimension(1150, 500));
         JButton encryptButton = new JButton("Encrypt");
         JButton clearButton = new JButton("Clear fields");
         JLabel sourceLabel = new JLabel("Input text for encryption here:");

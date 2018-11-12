@@ -4,9 +4,7 @@ import java.awt.*;
 class Window extends JFrame {
     private JTextArea sourceText;
     private JTextArea outputText;
-    private JButton encryptButton;
     private JRadioButton md5;
-    private JRadioButton sha1;
 
     Window(String name) {
         super(name);
@@ -14,14 +12,14 @@ class Window extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final MyPanel panel = new MyPanel(new GridLayout(0, 2, 30, 20));
         //panel.setPreferredSize(new Dimension(1150, 500));
-        encryptButton = new JButton("Encrypt");
+        JButton encryptButton = new JButton("Encrypt");
         JButton clearButton = new JButton("Clear fields");
         JLabel sourceLabel = new JLabel("Input text for encryption here:");
         sourceLabel.setForeground(Color.WHITE);
         JLabel outLabel = new JLabel("Your encrypted data:");
         outLabel.setForeground(Color.WHITE);
         md5 = new JRadioButton("MD5");
-        sha1 = new JRadioButton("SHA-1");
+        JRadioButton sha1 = new JRadioButton("SHA-1");
         sourceText = new JTextArea();
         sourceText.setRows(10);
         outputText = new JTextArea();

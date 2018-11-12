@@ -44,7 +44,7 @@ class SHA1 {
         return (num << cnt) | (num >>> (32 - cnt));
     }
 
-    public static String encodeHex(String str) {
+    static String encodeHex(String str) {
         byte[] x = str.getBytes();
         int[] blks = new int[(((x.length + 8) >> 6) + 1) * 16];
         int i;

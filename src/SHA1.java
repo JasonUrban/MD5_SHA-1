@@ -48,32 +48,32 @@ class SHA1 {
         byte[] x = str.getBytes();
         int[] blks = new int[(((x.length + 8) >> 6) + 1) * 16];
         int i;
-        for(i = 0; i < x.length; i++) {
+        for (i = 0; i < x.length; i++) {
             blks[i >> 2] |= x[i] << (24 - (i % 4) * 8);
         }
         blks[i >> 2] |= 0x80 << (24 - (i % 4) * 8);
         blks[blks.length - 1] = x.length * 8;
         int[] w = new int[80];
-        int a =  1732584193;
+        int a = 1732584193;
         int b = -271733879;
         int c = -1732584194;
-        int d =  271733878;
+        int d = 271733878;
         int e = -1009589776;
-        for(i = 0; i < blks.length; i += 16) {
+        for (i = 0; i < blks.length; i += 16) {
             int olda = a;
             int oldb = b;
             int oldc = c;
             int oldd = d;
             int olde = e;
-            for(int j = 0; j < 80; j++) {
+            for (int j = 0; j < 80; j++) {
                 w[j] = (j < 16) ? blks[i + j] :
-                        ( rol(w[j-3] ^ w[j-8] ^ w[j-14] ^ w[j-16], 1) );
+                        (rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1));
 
                 int t = rol(a, 5) + e + w[j] +
-                        ( (j < 20) ?  1518500249 + ((b & c) | ((~b) & d))
-                                : (j < 40) ?  1859775393 + (b ^ c ^ d)
+                        ((j < 20) ? 1518500249 + ((b & c) | ((~b) & d))
+                                : (j < 40) ? 1859775393 + (b ^ c ^ d)
                                 : (j < 60) ? -1894007588 + ((b & c) | (b & d) | (c & d))
-                                : -899497514 + (b ^ c ^ d) );
+                                : -899497514 + (b ^ c ^ d));
                 e = d;
                 d = c;
                 c = rol(b, 30);
@@ -86,11 +86,11 @@ class SHA1 {
             d = d + oldd;
             e = e + olde;
         }
-        int[] words = {a,b,c,d,e};
+        int[] words = {a, b, c, d, e};
         StringBuilder sb = new StringBuilder();
-        for(int word : words) {
+        for (int word : words) {
             StringBuilder hexWord = new StringBuilder(Integer.toHexString(word));
-            while(hexWord.length() < 8) {
+            while (hexWord.length() < 8) {
                 hexWord.insert(0, "0");
             }
             sb.append(hexWord);

@@ -45,7 +45,11 @@ class SHA1 {
         int[] blks = new int[(((x.length + 8) >> 6) + 1) * 16];
         int i;
         for (i = 0; i < x.length; i++) {
-            blks[i >> 2] |= x[i] << (24 - (i % 4) * 8);
+            if (x[i] < 0) {
+                blks[i >>> 2] |= (256 + x[i]) << (24 - (i % 4) * 8);
+            } else {
+                blks[i >>> 2] |= x[i] << (24 - (i % 4) * 8);
+            }
         }
         blks[i >> 2] |= 0x80 << (24 - (i % 4) * 8);
         blks[blks.length - 1] = x.length * 8;
